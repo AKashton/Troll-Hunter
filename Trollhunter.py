@@ -94,3 +94,20 @@ print("Accuracy:", accuracy)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
+
+#confusion matrix plot
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+# Generate the confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+# Plotting the confusion matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Non Cyber-Aggressive', 'Cyber-Aggressive'], 
+            yticklabels=['Non Cyber-Aggressive', 'Cyber-Aggressive'])
+plt.title('Confusion Matrix')
+plt.ylabel('Actual Label')
+plt.xlabel('Predicted Label')
+plt.show()
