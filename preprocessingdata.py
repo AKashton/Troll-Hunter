@@ -1,5 +1,6 @@
 import json, re
 import nltk
+import skleran
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -50,4 +51,23 @@ def clean_text(text):
 cleaned_tweets = [clean_text(tweet) for tweet in tweets_content]
 
 # Display the first few cleaned tweets
-cleaned_tweets[:5], tweets_labels[:5]
+print(cleaned_tweets[:5], tweets_labels[:5])
+
+#TF-IDF used here to help convert processed text into numerical fomrat
+#TF stands for term frequency- amount of times words show up
+#IDF- stands for Inverse document Frequency
+#IDF Measures how important a term is (weights it)
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Initialize the TF-IDF Vectorizer
+vectorizer = TfidfVectorizer()
+
+# Fit and transform the cleaned tweets
+tfidf_features = vectorizer.fit_transform(cleaned_tweets)
+
+# Displaying the shape of the TF-IDF feature matrix
+tfidf_features.shape
+
+#split data into training and test sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(tfidf_features, tweets_labels, test_size=0.2, random_state=42)
